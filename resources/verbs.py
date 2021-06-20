@@ -36,6 +36,24 @@ verbs = [
         "is_irregular": True, 
         "learn_level": 0,
         "examples": ["I go to school."] 
+    },
+    {
+        "vid": 2, 
+        "present": "eat", 
+        "past": "ate", 
+        "past_participle": "eaten", 
+        "is_irregular": True, 
+        "learn_level": 0,
+        "examples": ["I eat snacks."] 
+    },
+    {
+        "vid": 3, 
+        "present": "watch", 
+        "past": "watched", 
+        "past_participle": "watched", 
+        "is_irregular": False, 
+        "learn_level": 0,
+        "examples": ["I watch TV."] 
     } 
 ]
 
@@ -92,21 +110,21 @@ class Verbs(CustomResource):
 
 
 @api.route('/<id_>')
-@api.param('id_', 'The link identifier')
-@api.response(404, 'Link not found')
+@api.param('id_', 'The verb identifier')
+@api.response(404, 'Verb not found')
 class Verb(CustomResource):
-    @api.doc('get_link')
-    @api.expect(parser_create, parser_header)
+    @api.doc('get_verb')
+    # @api.expect(parser_create, parser_header)
     # @token_required
-    def get(self, id_, current_user, **kwargs):
+    def get(self, id_, **kwargs):
         '''Fetch an link given its identifier'''
-        if current_user is None:
-            return self.send(status=400, message=kwargs["error_msg"])
+        # if current_user is None:
+        #     return self.send(status=400, message=kwargs["error_msg"])
         try:
-            link = db.get_links(id_=id_)
-            if link is None:
-                return self.send(status=404, result=None)
-            return self.send(status=200, result=link)
+            # link = db.get_links(id_=id_)
+            # if link is None:
+            #     return self.send(status=404, result=None)
+            return self.send(status=200, result=verbs[id_])
         except:
             traceback.print_exc()
             return self.send(status=400, result=None)
