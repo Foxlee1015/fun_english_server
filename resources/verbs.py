@@ -124,7 +124,7 @@ class Verb(CustomResource):
             # link = db.get_links(id_=id_)
             # if link is None:
             #     return self.send(status=404, result=None)
-            return self.send(status=200, result=verbs[id_])
+            return self.send(status=200, result=verbs[int(id_)])
         except:
             traceback.print_exc()
             return self.send(status=400, result=None)
