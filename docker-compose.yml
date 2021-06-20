@@ -2,7 +2,7 @@ version: '3'
 
 services:
   flask_app:
-    container_name: task_tracker
+    container_name: fun_english_server
     networks:
       - nginx_network
     restart: always
