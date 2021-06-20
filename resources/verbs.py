@@ -32,8 +32,7 @@ verbs = [
         "vid": 1, 
         "present": "go", 
         "past": "went", 
-        "past_particile": 
-        "gone", 
+        "past_participle": "gone", 
         "is_irregular": True, 
         "learn_level": 0,
         "examples": ["I go to school."] 
