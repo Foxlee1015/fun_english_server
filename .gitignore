@@ -1,0 +1,7 @@
+venv/*
+logs/*
+__pychche__/*
+
+*.pyc
+.env
+.vscode
