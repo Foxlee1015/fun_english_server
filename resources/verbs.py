@@ -27,12 +27,27 @@ def delete_links(ids):
         traceback.print_exc()
         return False
 
+verbs = [
+    {
+        "vid": 1, 
+        "present": "go", 
+        "past": "went", 
+        "past_particile": 
+        "gone", 
+        "is_irregular": True, 
+        "learn_level": 0,
+        "examples": ["I go to school."] 
+    } 
+]
 
 # https://flask-restplus.readthedocs.io/en/stable/parsing.html
 parser_create = reqparse.RequestParser()
-parser_create.add_argument('url', type=str, required=True, location='form', help='url')
-parser_create.add_argument('description', type=str, required=True, location='form')
-parser_create.add_argument('image_url', type=str, location='form')
+parser_create.add_argument('present', type=str, required=True, location='form')
+parser_create.add_argument('past', type=str, required=True, location='form')
+parser_create.add_argument('past_participle', type=str, required=True, location='form')
+parser_create.add_argument('is_irregular', type=bool, required=True, location='form')
+parser_create.add_argument('learn_level', type=str, required=True, location='form')
+parser_create.add_argument('examples', type=list, required=True, location='form')
 
 parser_delete = reqparse.RequestParser()
 parser_delete.add_argument('ids', type=str, required=True, action='split')
@@ -41,15 +56,15 @@ parser_header = reqparse.RequestParser()
 parser_header.add_argument('Authorization', type=str, required=True, location='headers')
 
 @api.route('/')
-class Links(CustomResource):
-    @api.doc('get all links')
-    @api.expect(parser_header)
-    @token_required
-    def get(self, current_user, **kwargs):
-        if current_user is None:
-            return self.send(status=400, message=kwargs["error_msg"])
-        links = db.get_links(user_id=current_user["uid"])
-        return self.send(status=200, result=links)
+class Verbs(CustomResource):
+    @api.doc('get verbs')
+    # @api.expect(parser_header)
+    # @token_required
+    def get(self, **kwargs):
+        # if current_user is None:
+        #     return self.send(status=400, message=kwargs["error_msg"])
+        # links = db.get_links(user_id=current_user["uid"])
+        return self.send(status=200, result=verbs)
     
     @api.doc('create a new link')
     @api.expect(parser_create, parser_header)
@@ -80,10 +95,10 @@ class Links(CustomResource):
 @api.route('/<id_>')
 @api.param('id_', 'The link identifier')
 @api.response(404, 'Link not found')
-class Link(CustomResource):
+class Verb(CustomResource):
     @api.doc('get_link')
     @api.expect(parser_create, parser_header)
-    @token_required
+    # @token_required
     def get(self, id_, current_user, **kwargs):
         '''Fetch an link given its identifier'''
         if current_user is None:
