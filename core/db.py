@@ -546,6 +546,23 @@ def delete_verbs(ids):
         traceback.print_exc()
 
 
+def get_sentences():
+    try:
+        with get_db() as conn:
+
+            cur = conn.cursor()
+            sql = """
+                SELECT *
+                FROM sentence
+            """
+            cur.execute(sql)
+            conn.commit()
+            res = cur.fetchall()
+            return res
+    except:
+        traceback.print_exc()
+        return False
+
 
 def insert_sentence(text, learn_level):
     try:

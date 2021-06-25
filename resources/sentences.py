@@ -57,7 +57,7 @@ class Sentences(CustomResource):
     def get(self, **kwargs):
         sentences = db.get_sentences()
         print(sentences)
-        return self.send(status=200, result=sentence)
+        return self.send(status=200, result=sentences)
     
     @api.doc('create a new sentence')
     @api.expect(parser_create, parser_header)
