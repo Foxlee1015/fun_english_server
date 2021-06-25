@@ -36,7 +36,7 @@ def delete_verbs(ids):
 parser_create = reqparse.RequestParser()
 parser_create.add_argument('present', type=str, required=True, location='form')
 parser_create.add_argument('past', type=str, required=True, location='form')
-parser_create.add_argument('past_participle', type=str, required=True, location='form')
+parser_create.add_argument('participle', type=str, required=True, location='form')
 parser_create.add_argument('is_irregular', type=int, required=True, location='form')
 parser_create.add_argument('learn_level', type=int, required=True, location='form')
 parser_create.add_argument('sentences', type=list, required=True, location='form')
