@@ -482,3 +482,52 @@ def add_multiple_conditions_to_query(sql, cols_rows):
             sql += f" {col}={row}"
         else:
             sql += f" {col}='{row}'"
+
+
+def get_verbs():
+    try:
+        with get_db() as conn:
+
+            cur = conn.cursor()
+            sql = """
+                SELECT *
+                FROM verb
+            """
+            cur.execute(sql)
+            conn.commit()
+            res = cur.fetchall()
+            return res
+    except:
+        traceback.print_exc()
+        return False
+
+
+def insert_verb(present,past,participle,is_irregular,learn_level):
+    try:
+        with get_db() as conn:
+            cur = conn.cursor()
+            sql = "INSERT into verb(present,past,participle,is_irregular,learn_level) values (%s,%s,%s,%s,%s)"
+            cur.execute(sql, (present,past,participle,is_irregular,learn_level))
+            conn.commit()
+
+        return True
+    except:
+        traceback.print_exc()
+        return False
+
+
+def delete_verbs(ids):
+    """
+    :param ids: a list of verb ids
+    """
+    try:
+        with get_db() as conn:
+            cur = conn.cursor()
+            sql = f"""
+                DELETE FROM verb
+                WHERE id in ({','.join(str(id_) for id_ in ids)})
+            """
+            cur.execute(sql)
+            conn.commit()
+    except:
+        traceback.print_exc()
