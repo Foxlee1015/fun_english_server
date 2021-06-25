@@ -39,7 +39,6 @@ parser_create.add_argument('past', type=str, required=True, location='form')
 parser_create.add_argument('participle', type=str, required=True, location='form')
 parser_create.add_argument('is_irregular', type=int, required=True, location='form')
 parser_create.add_argument('learn_level', type=int, required=True, location='form')
-parser_create.add_argument('sentences', type=list, required=True, location='form')
 
 parser_delete = reqparse.RequestParser()
 parser_delete.add_argument('ids', type=str, required=True, action='split')
