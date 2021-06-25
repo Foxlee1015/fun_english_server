@@ -568,7 +568,7 @@ def insert_sentence(text, learn_level):
     try:
         with get_db() as conn:
             cur = conn.cursor()
-            sql = "INSERT into verb(text,learn_level) values (%s,%s)"
+            sql = "INSERT into sentence(text,learn_level) values (%s,%s)"
             cur.execute(sql, (text, learn_level))
             conn.commit()
 
@@ -582,7 +582,7 @@ def update_sentence(id_,text,learn_level):
     try:
         with get_db() as conn:
             cur = conn.cursor()
-            sql = "INSERT into verb(text, learn_level) values (%s,%s)"
+            sql = "INSERT into sentence(text, learn_level) values (%s,%s)"
             cur.execute(sql, (text,learn_level))
             conn.commit()
 
