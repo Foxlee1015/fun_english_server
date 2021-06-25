@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `verb` (
     `id`                    INT(11) NOT NULL AUTO_INCREMENT,
     `present`               VARCHAR(50) UNIQUE,
     `past`                  VARCHAR(50),
-    `participle`          VARCHAR(50),
+    `participle`            VARCHAR(50),
     `is_irregular`          INT(3),
     `learn_level`           INT(3),
     PRIMARY KEY(`id`)
