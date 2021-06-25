@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `verb` (
 
 CREATE TABLE IF NOT EXISTS `sentence` (
     `id`                 INT(11) NOT NULL AUTO_INCREMENT,
-    `text`               VARCHAR(200),
+    `text`               VARCHAR(200) UNIQUE,
     `learn_level`        INT(3),
     PRIMARY KEY(`id`)
 );
