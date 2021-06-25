@@ -3,6 +3,7 @@ from flask_restplus import Api
 import jwt
 
 from .verbs import api as verbs
+from .sentences import api as sentences
 from .logs import api as logs
 from .sessions import api as sessions
 from .tokens import api as tokens
@@ -18,6 +19,7 @@ api = Api(
 )
 
 api.add_namespace(verbs)
+api.add_namespace(sentences)
 api.add_namespace(logs)
 api.add_namespace(sessions)
 api.add_namespace(users)

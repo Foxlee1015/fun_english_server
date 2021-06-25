@@ -516,6 +516,19 @@ def insert_verb(present,past,participle,is_irregular,learn_level):
         return False
 
 
+def update_verb(id_, present,past,participle,is_irregular,learn_level):
+    try:
+        with get_db() as conn:
+            cur = conn.cursor()
+            sql = "INSERT into verb(present,past,participle,is_irregular,learn_level) values (%s,%s,%s,%s,%s)"
+            cur.execute(sql, (present,past,participle,is_irregular,learn_level))
+            conn.commit()
+
+        return True
+    except:
+        traceback.print_exc()
+        return False
+
 def delete_verbs(ids):
     """
     :param ids: a list of verb ids
@@ -525,6 +538,51 @@ def delete_verbs(ids):
             cur = conn.cursor()
             sql = f"""
                 DELETE FROM verb
+                WHERE id in ({','.join(str(id_) for id_ in ids)})
+            """
+            cur.execute(sql)
+            conn.commit()
+    except:
+        traceback.print_exc()
+
+
+
+def insert_sentence(text, learn_level):
+    try:
+        with get_db() as conn:
+            cur = conn.cursor()
+            sql = "INSERT into verb(text,learn_level) values (%s,%s)"
+            cur.execute(sql, (text, learn_level))
+            conn.commit()
+
+        return True
+    except:
+        traceback.print_exc()
+        return False
+
+
+def update_sentence(id_,text,learn_level):
+    try:
+        with get_db() as conn:
+            cur = conn.cursor()
+            sql = "INSERT into verb(text, learn_level) values (%s,%s)"
+            cur.execute(sql, (text,learn_level))
+            conn.commit()
+
+        return True
+    except:
+        traceback.print_exc()
+        return False
+
+def delete_sentences(ids):
+    """
+    :param ids: a list of verb ids
+    """
+    try:
+        with get_db() as conn:
+            cur = conn.cursor()
+            sql = f"""
+                DELETE FROM sentence
                 WHERE id in ({','.join(str(id_) for id_ in ids)})
             """
             cur.execute(sql)
