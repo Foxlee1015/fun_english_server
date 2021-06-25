@@ -59,11 +59,7 @@ class Verbs(CustomResource):
     @api.doc('create a new verb')
     @api.expect(parser_create, parser_header)
     # @token_required
-    def post(self, current_user, **kwargs):
-
-        # only for admin
-        # if current_user is None:
-        #     return self.send(status=400, message=kwargs["error_msg"])
+    def post(self, **kwargs):
         args = parser_create.parse_args()
         
         result = create_verb(args)
@@ -74,7 +70,7 @@ class Verbs(CustomResource):
     @api.doc('delete verbs')
     @api.expect(parser_delete, parser_header)
     # @token_required
-    def delete(self, current_user, **kwargs):
+    def delete(self,  **kwargs):
         
         # only for admin
         # if current_user is None:
