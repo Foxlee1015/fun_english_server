@@ -15,7 +15,7 @@ def create_verb(args):
         present = args["present"]
         past = args["past"]
         participle= args["participle"]
-        is_irregular = args["isIrregular"]
+        is_irregular = args["is_irregular"]
         learn_level = args["learn_level"]
         db.insert_verb(present,past,participle,is_irregular,learn_level)
         return True
