@@ -14,7 +14,7 @@ def create_sentence(args):
     try:
         text = args["text"]
         learn_level = args["learn_level"]
-        db.insert_verb(text,learn_level)
+        db.insert_sentence(text,learn_level)
         return True
     except:
         traceback.print_exc()
@@ -22,7 +22,7 @@ def create_sentence(args):
 
 def delete_sentences(ids):
     try:
-        db.delete_verb(ids)
+        db.delete_sentences(ids)
         return True
     except:
         traceback.print_exc()
@@ -32,7 +32,7 @@ def update_sentence(args):
     try:
         text = args["text"]
         learn_level = args["learn_level"]
-        db.update_verb(text,learn_level)
+        db.update_sentence(text,learn_level)
         return True
     except:
         traceback.print_exc()
