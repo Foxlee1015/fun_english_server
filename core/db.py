@@ -478,7 +478,8 @@ def add_multiple_conditions_to_query(sql, cols_rows):
     for col_row in cols_rows:
         col = col_row["col"]
         row = col_row["row"]
-        if isinstance(col_row["col"], int):
+        print(col, row)
+        if isinstance(col_row[col], int):
             sql += f" {col}={row}"
         else:
             sql += f" {col}='{row}'"
@@ -496,6 +497,26 @@ def get_verbs():
             cur.execute(sql)
             conn.commit()
             res = cur.fetchall()
+            return res
+    except:
+        traceback.print_exc()
+        return False
+
+
+def get_verb(present):
+    try:
+        with get_db() as conn:
+
+            cur = conn.cursor()
+            sql = f"""
+                SELECT *
+                FROM verb
+            """
+            
+            sql = add_condition_to_query(sql, "present", present)
+            cur.execute(sql)
+            conn.commit()
+            res = cur.fetchone()
             return res
     except:
         traceback.print_exc()
@@ -520,14 +541,26 @@ def update_verb(id_, present,past,participle,is_irregular,learn_level):
     try:
         with get_db() as conn:
             cur = conn.cursor()
-            sql = "INSERT into verb(present,past,participle,is_irregular,learn_level) values (%s,%s,%s,%s,%s)"
-            cur.execute(sql, (present,past,participle,is_irregular,learn_level))
+            sql = "UPDATE verb SET "
+            sql += f"past='{past}', "
+            sql += f"participle='{participle}', "
+            sql += f"is_irregular='{is_irregular}', "
+            sql += f"learn_level='{learn_level}' "
+            
+            print('zzz', sql)
+            add_multiple_conditions_to_query(sql, [{
+                "id_": int(id_),
+                "present": present
+            }])
+            print(sql)
+            
+            cur.execute(sql)
             conn.commit()
-
         return True
     except:
         traceback.print_exc()
         return False
+
 
 def delete_verbs(ids):
     """
@@ -542,8 +575,10 @@ def delete_verbs(ids):
             """
             cur.execute(sql)
             conn.commit()
+            return True
     except:
         traceback.print_exc()
+        return False
 
 
 def get_sentences():

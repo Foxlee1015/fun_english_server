@@ -40,8 +40,6 @@ def return_user_id_if_user_password_is_correct(name, password):
         return None
 
 
-
-
 parser_create = reqparse.RequestParser()
 parser_create.add_argument('name', type=str, required=True, location='form', help='Unique user name')
 parser_create.add_argument('email', type=str, location='form')
