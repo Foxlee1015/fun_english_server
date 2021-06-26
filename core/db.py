@@ -16,7 +16,8 @@ from core.utils import docker_command, stringify_given_datetime_or_current_datet
 APP_ROOT = os.path.join(os.path.dirname(__file__), '..')   # refers to application_top
 dotenv_path = os.path.join(APP_ROOT, '.env')
 load_dotenv(dotenv_path)
-    
+
+dev = os.getenv("DEV", 'False').lower() in ('true', '1', 't')
 
 db_host_dev = os.getenv('DB_HOST_DEV')
 db_host = os.getenv('DB_HOST')
@@ -33,21 +34,22 @@ db_info_kwargs = {
     "password": db_pw,
     "db": db_dataset,
     "charset": db_charset,
-    "cursorclass": pymysql.cursors.DictCursor
+    "cursorclass": pymysql.cursors.DictCursor,
 }
 
 @contextmanager
 def get_db():
     try:
         conn = None
+        print("dev : ", dev, type(dev))
+        if dev:
+            db_info_kwargs["host"] = db_host_dev 
         try:
             print("db connection : ", db_info_kwargs)
             conn = pymysql.connect(**db_info_kwargs)
-        except:
-            db_info_kwargs["host"] = db_host
-            print("db host dev connect exception")
-            print("db connection : ", db_info_kwargs)
-            conn = pymysql.connect(**db_info_kwargs)
+        except Exception as e:
+            traceback.print_exc()
+            print("db connection : ", e)
         yield conn
     except:
         traceback.print_exc()
@@ -546,13 +548,8 @@ def update_verb(id_, present,past,participle,is_irregular,learn_level):
             sql += f"participle='{participle}', "
             sql += f"is_irregular='{is_irregular}', "
             sql += f"learn_level='{learn_level}' "
-            
-            print('zzz', sql)
-            add_multiple_conditions_to_query(sql, [{
-                "id_": int(id_),
-                "present": present
-            }])
-            print(sql)
+            sql += f"WHERE id={id_} AND "
+            sql += f"present='{present}'"
             
             cur.execute(sql)
             conn.commit()

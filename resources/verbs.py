@@ -107,8 +107,6 @@ class Verb(CustomResource):
     def put(self, id_, **kwargs):
         args = parser_verb_tense.parse_args()
         args.update(parser_verb_learn_level.parse_args())
-        
-        print("????")
         result = update_verb(id_, args)
             
         status = 201 if result else 400
